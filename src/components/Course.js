@@ -15,6 +15,16 @@ const Course = ({ course }) => {
           );
         })}
       </ul>
+      <p>
+        Total of{" "}
+        <span>
+          {" "}
+          {course.parts.reduce((sum, parts) => {
+            return sum + parts.exercises;
+          }, 0)}{" "}
+        </span>{" "}
+        exercises
+      </p>
     </div>
   );
 };
