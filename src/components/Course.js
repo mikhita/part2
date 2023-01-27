@@ -3,12 +3,11 @@ import React from "react";
 const Course = ({ course }) => {
   return (
     <div>
-      <h1>{course.name}</h1>
+      <h1>{course[0].name}</h1>
       <ul>
-        {console.log(course.parts)}
-        {course.parts.map((item) => {
+        {course[0].parts.map((item) => {
           return (
-            <li key={course.parts.id}>
+            <li key={course[0].parts.id}>
               {item.name}
               {"  "} {item.exercises}
             </li>
@@ -19,7 +18,28 @@ const Course = ({ course }) => {
         Total of{" "}
         <span>
           {" "}
-          {course.parts.reduce((sum, parts) => {
+          {course[0].parts.reduce((sum, parts) => {
+            return sum + parts.exercises;
+          }, 0)}{" "}
+        </span>{" "}
+        exercises
+      </p>
+      <h1>{course[1].name}</h1>
+      <ul>
+        {course[1].parts.map((item) => {
+          return (
+            <li key={course[1].parts.id}>
+              {item.name}
+              {"  "} {item.exercises}
+            </li>
+          );
+        })}
+      </ul>
+      <p>
+        Total of{" "}
+        <span>
+          {" "}
+          {course[1].parts.reduce((sum, parts) => {
             return sum + parts.exercises;
           }, 0)}{" "}
         </span>{" "}
