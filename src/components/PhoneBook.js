@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 
 const PhoneBook = () => {
-  const [persons, setPersons] = useState([{ name: "Arto Hellas", id: 1 }]);
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", id: 1, number: "599123456" },
+  ]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -16,7 +18,10 @@ const PhoneBook = () => {
 
   function canAddObject(array, newObject) {
     for (let i = 0; i < array.length; i++) {
-      if (JSON.stringify(array[i].name) === JSON.stringify(newObject.name)) {
+      if (
+        JSON.stringify(array[i].name) === JSON.stringify(newObject.name) ||
+        JSON.stringify(array[i].number) === JSON.stringify(newObject.number)
+      ) {
         return false;
       }
     }
@@ -27,6 +32,7 @@ const PhoneBook = () => {
     event.preventDefault();
     const personObject = {
       name: newName,
+      number: newNumber,
       id: persons.length + 1,
     };
     if (!canAddObject(persons, personObject)) {
@@ -37,6 +43,7 @@ const PhoneBook = () => {
       setPersons(persons.concat(personObject));
     }
     setNewName("");
+    setNewNumber("");
   };
 
   return (
@@ -67,7 +74,10 @@ const PhoneBook = () => {
       <h2>Numbers</h2>
       <ul>
         {persons.map((person) => (
-          <li key={person.id}>{person.name}</li>
+          <li key={person.id}>
+            {person.name}
+            {": "} {person.number}
+          </li>
         ))}
       </ul>
     </div>
