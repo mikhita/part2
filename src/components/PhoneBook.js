@@ -6,6 +6,10 @@ const PhoneBook = () => {
   ]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [searchName, setSearchName] = useState("");
+  const filteredArray = persons.filter((person) =>
+    person.name.includes(searchName)
+  );
 
   const handleNameChange = (event) => {
     event.preventDefault();
@@ -14,6 +18,10 @@ const PhoneBook = () => {
   const handleNumberChange = (event) => {
     event.preventDefault();
     setNewNumber(event.target.value);
+  };
+  const handleSearchNameChange = (event) => {
+    event.preventDefault();
+    setSearchName(event.target.value);
   };
 
   function canAddObject(array, newObject) {
@@ -36,9 +44,9 @@ const PhoneBook = () => {
       id: persons.length + 1,
     };
     if (!canAddObject(persons, personObject)) {
-      alert(`${newName} is already added to phonebook`);
-    } else if (personObject.name.length < 2) {
-      alert(`phonebook name is empty`);
+      alert(`${newName} or ${newNumber} is already added to phonebook`);
+    } else if (personObject.name.length < 2 || personObject.number.length < 2) {
+      alert(`input is requiered`);
     } else {
       setPersons(persons.concat(personObject));
     }
@@ -49,6 +57,20 @@ const PhoneBook = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        filter shown with{" "}
+        <input onChange={handleSearchNameChange} value={searchName} />
+      </div>
+      <ul>
+        {filteredArray.length === 0 ? (
+          <p>no results found</p>
+        ) : (
+          filteredArray.map((name) => {
+            return <li key={name.id}>{name.name}</li>;
+          })
+        )}
+      </ul>
+      <h2>add a new</h2>
       <div>debug: {newName}</div>
       <form onSubmit={addName}>
         <div>
