@@ -3,10 +3,15 @@ import React, { useState } from "react";
 const PhoneBook = () => {
   const [persons, setPersons] = useState([{ name: "Arto Hellas", id: 1 }]);
   const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
 
   const handleNameChange = (event) => {
     event.preventDefault();
     setNewName(event.target.value);
+  };
+  const handleNumberChange = (event) => {
+    event.preventDefault();
+    setNewNumber(event.target.value);
   };
 
   function canAddObject(array, newObject) {
@@ -45,6 +50,14 @@ const PhoneBook = () => {
             onChange={handleNameChange}
             value={newName}
             placeholder="write a name..."
+          />
+        </div>
+        <div>
+          number:{" "}
+          <input
+            value={newNumber}
+            onChange={handleNumberChange}
+            placeholder="write a number..."
           />
         </div>
         <div>
