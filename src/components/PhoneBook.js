@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import AddContact from "./AddContact";
+import FilteredName from "./FilteredName";
+import NumbersList from "./NumbersList";
 
 const PhoneBook = () => {
   const [persons, setPersons] = useState([
@@ -57,51 +60,21 @@ const PhoneBook = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with{" "}
-        <input onChange={handleSearchNameChange} value={searchName} />
-      </div>
-      <ul>
-        {filteredArray.length === 0 ? (
-          <p>no results found</p>
-        ) : (
-          filteredArray.map((name) => {
-            return <li key={name.id}>{name.name}</li>;
-          })
-        )}
-      </ul>
+      <FilteredName
+        value={searchName}
+        handleSearchNameChange={handleSearchNameChange}
+        filteredArray={filteredArray}
+      />
       <h2>add a new</h2>
-      <div>debug: {newName}</div>
-      <form onSubmit={addName}>
-        <div>
-          name:{" "}
-          <input
-            onChange={handleNameChange}
-            value={newName}
-            placeholder="write a name..."
-          />
-        </div>
-        <div>
-          number:{" "}
-          <input
-            value={newNumber}
-            onChange={handleNumberChange}
-            placeholder="write a number..."
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <AddContact
+        addName={addName}
+        handleNameChange={handleNameChange}
+        newName={newName}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}
+      />
       <h2>Numbers</h2>
-      <ul>
-        {persons.map((person) => (
-          <li key={person.id}>
-            {person.name}
-            {": "} {person.number}
-          </li>
-        ))}
-      </ul>
+      <NumbersList persons={persons} />
     </div>
   );
 };
