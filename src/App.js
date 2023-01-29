@@ -1,6 +1,3 @@
-// import Course from "./components/Course";
-
-// import Notes from "./components/Notes";
 import PhoneBook from "./components/PhoneBook";
 
 const App = () => {

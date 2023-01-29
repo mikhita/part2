@@ -6,9 +6,17 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "babel-polyfill": "^6.26.0",
+    "browserify-zlib": "^0.2.0",
+    "core-js": "^3.27.2",
+    "node-polyfill-webpack-plugin": "^2.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
+    "regenerator-runtime": "^0.13.11",
+    "stream": "^0.0.2",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -34,5 +42,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-app-rewired": "^2.2.1"
+  },
+  "browser": {
+    "zlib": false,
+    "stream": false
   }
 }

@@ -9,14 +9,29 @@ const PhoneBook = () => {
     setNewName(event.target.value);
   };
 
+  function canAddObject(array, newObject) {
+    for (let i = 0; i < array.length; i++) {
+      if (JSON.stringify(array[i].name) === JSON.stringify(newObject.name)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   const addName = (event) => {
     event.preventDefault();
     const personObject = {
       name: newName,
       id: persons.length + 1,
     };
-    setPersons(persons.concat(personObject));
-    setNewName(" ");
+    if (!canAddObject(persons, personObject)) {
+      alert(`${newName} is already added to phonebook`);
+    } else if (personObject.name.length < 2) {
+      alert(`phonebook name is empty`);
+    } else {
+      setPersons(persons.concat(personObject));
+    }
+    setNewName("");
   };
 
   return (
