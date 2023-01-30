@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import AddContact from "./AddContact";
 import FilteredName from "./FilteredName";
 import NumbersList from "./NumbersList";
 
 const PhoneBook = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", id: 1, number: "599123456" },
-  ]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchName, setSearchName] = useState("");
+
+  useEffect(() => {
+    console.log("effect");
+    axios.get("http://localhost:3001/persons").then((response) => {
+      console.log("promise fulfilled");
+      setPersons(response.data);
+    });
+  }, []);
+  console.log("render", persons.length, "notes");
+
   const filteredArray = persons.filter((person) =>
     person.name.includes(searchName)
   );

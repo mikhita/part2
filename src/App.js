@@ -1,5 +1,19 @@
 import PhoneBook from "./components/PhoneBook";
 
+import axios from "axios";
+
+const promise = axios.get("http://localhost:3001/persons");
+promise.then((response) => {
+  const persons = response.data;
+  console.log(persons);
+});
+
+// const promise2 = axios.get("http://localhost:3001/foobar");
+// promise2.then((response) => {
+//   const notes = response.data;
+//   console.log(notes);
+// });
+
 const App = () => {
   // const courses = [
   // {
