@@ -49,18 +49,23 @@ const PhoneBook = () => {
   }
 
   const addName = (event) => {
+    const url = "http://localhost:3001/persons";
     event.preventDefault();
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
     };
+
     if (!canAddObject(persons, personObject)) {
       alert(`${newName} or ${newNumber} is already added to phonebook`);
     } else if (personObject.name.length < 2 || personObject.number.length < 2) {
       alert(`input is requiered`);
     } else {
-      setPersons(persons.concat(personObject));
+      axios.post(url, personObject).then((response) => {
+        if (personObject.name.length > 2) {
+          setPersons(persons.concat(personObject));
+        }
+      });
     }
     setNewName("");
     setNewNumber("");

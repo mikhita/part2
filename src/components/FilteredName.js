@@ -15,6 +15,7 @@ const FilteredName = (props) => {
           <p>no results found</p>
         ) : (
           props.filteredArray.map((name) => {
+            console.log(name.id);
             return <li key={name.id}>{name.name}</li>;
           })
         )}
