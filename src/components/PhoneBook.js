@@ -11,15 +11,14 @@ const PhoneBook = () => {
   const [searchName, setSearchName] = useState("");
 
   useEffect(() => {
-    personsServices.getAll().then((response) => {
+    async function fetchData() {
+      const response = await personsServices.getAll();
       setPersons(response.data);
-    });
+    }
+    fetchData();
   }, []);
-  console.log("render", persons.length, "notes");
 
-  const filteredArray = persons.filter((person) =>
-    person.name.includes(searchName)
-  );
+  console.log("render", persons.length, "notes");
 
   const handleNameChange = (event) => {
     event.preventDefault();
@@ -33,6 +32,10 @@ const PhoneBook = () => {
     event.preventDefault();
     setSearchName(event.target.value);
   };
+  const filteredArray = persons.filter((person) =>
+    person.name.includes(searchName)
+  );
+  // console.log("persons is" + persons.length);
 
   function canAddObject(array, newObject) {
     for (let i = 0; i < array.length; i++) {
@@ -51,6 +54,7 @@ const PhoneBook = () => {
     const personObject = {
       name: newName,
       number: newNumber,
+      id: persons.length + 1,
     };
 
     if (!canAddObject(persons, personObject)) {
@@ -66,6 +70,20 @@ const PhoneBook = () => {
     }
     setNewName("");
     setNewNumber("");
+  };
+
+  const handleDeleteOf = async (id) => {
+    const person = persons.find((p) => p.id === id);
+    try {
+      const deletePerson = { ...person };
+
+      await personsServices.delet(id, deletePerson).then((response) => {
+        setPersons(persons.filter((p) => p.id !== id));
+      });
+    } catch (error) {
+      alert(`the person '${person.name}' was already deleted from server`);
+      setPersons(persons.filter((n) => n.id !== id));
+    }
   };
 
   return (
@@ -85,7 +103,17 @@ const PhoneBook = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <NumbersList persons={persons} />
+      <div>
+        <ul>
+          {persons.map((person) => (
+            <NumbersList
+              key={person.id}
+              person={person}
+              handleDelete={() => handleDeleteOf(person.id)}
+            />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
