@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import personsServices from "../services/persons";
 import AddContact from "./AddContact";
 import FilteredName from "./FilteredName";
 import NumbersList from "./NumbersList";
@@ -11,9 +11,7 @@ const PhoneBook = () => {
   const [searchName, setSearchName] = useState("");
 
   useEffect(() => {
-    console.log("effect");
-    axios.get("http://localhost:3001/persons").then((response) => {
-      console.log("promise fulfilled");
+    personsServices.getAll().then((response) => {
       setPersons(response.data);
     });
   }, []);
@@ -49,7 +47,6 @@ const PhoneBook = () => {
   }
 
   const addName = (event) => {
-    const url = "http://localhost:3001/persons";
     event.preventDefault();
     const personObject = {
       name: newName,
@@ -61,7 +58,7 @@ const PhoneBook = () => {
     } else if (personObject.name.length < 2 || personObject.number.length < 2) {
       alert(`input is requiered`);
     } else {
-      axios.post(url, personObject).then((response) => {
+      personsServices.create(personObject).then((response) => {
         if (personObject.name.length > 2) {
           setPersons(persons.concat(personObject));
         }
