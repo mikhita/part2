@@ -35,7 +35,6 @@ const PhoneBook = () => {
   const filteredArray = persons.filter((person) =>
     person.name.includes(searchName)
   );
-  // console.log("persons is" + persons.length);
 
   function canAddObject(array, newObject) {
     for (let i = 0; i < array.length; i++) {
@@ -78,7 +77,21 @@ const PhoneBook = () => {
       const deletePerson = { ...person };
 
       await personsServices.delet(id, deletePerson).then((response) => {
-        setPersons(persons.filter((p) => p.id !== id));
+        if (
+          window.confirm(`Do you really want to delete ${deletePerson.name} ?`)
+        ) {
+          alert(`person with name: ${deletePerson.name} has been deleted`);
+        }
+        // Filter the existing persons array to exclude the person with the specified id
+        const updatedPersons = persons.filter((p) => p.id !== id);
+
+        // Re-assign IDs to the remaining persons
+        updatedPersons.forEach((person, index) => {
+          person.id = index + 1;
+        });
+
+        // Set the state of persons to the updated array
+        setPersons(updatedPersons);
       });
     } catch (error) {
       alert(`the person '${person.name}' was already deleted from server`);
