@@ -21,7 +21,9 @@ const AddContact = (props) => {
           />
         </div>
         <div>
-          <button type="submit">add</button>
+          <button type="submit" id="addContactButton">
+            add
+          </button>
         </div>
       </form>
     </div>

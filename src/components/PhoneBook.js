@@ -38,10 +38,7 @@ const PhoneBook = () => {
 
   function canAddObject(array, newObject) {
     for (let i = 0; i < array.length; i++) {
-      if (
-        JSON.stringify(array[i].name) === JSON.stringify(newObject.name) ||
-        JSON.stringify(array[i].number) === JSON.stringify(newObject.number)
-      ) {
+      if (JSON.stringify(array[i].name) === JSON.stringify(newObject.name)) {
         return false;
       }
     }
@@ -57,7 +54,27 @@ const PhoneBook = () => {
     };
 
     if (!canAddObject(persons, personObject)) {
-      alert(`${newName} or ${newNumber} is already added to phonebook`);
+      alert(
+        `${newName}  is already added to phonebook, replace the old number with a new one? `
+      );
+      const person = persons.find((p) => p.name === personObject.name);
+      let id = 0;
+      if (person) {
+        id = person.id;
+      }
+      console.log("person with id is", person);
+      const changePerson = { ...person, number: personObject.number };
+
+      personsServices
+        .update(id, changePerson)
+        .then((response) => {
+          console.log(response);
+          setPersons(persons.map((p) => (p.id !== id ? p : response.data)));
+        })
+        .catch((error) => {
+          alert(`the note '${person.name}' was already deleted from server`);
+          setPersons(persons.filter((p) => p.id !== id));
+        });
     } else if (personObject.name.length < 2 || personObject.number.length < 2) {
       alert(`input is requiered`);
     } else {
