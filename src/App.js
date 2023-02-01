@@ -1,4 +1,6 @@
-import PhoneBook from "./components/PhoneBook";
+// import PhoneBook from "./components/PhoneBook";
+
+import Countries from "./components/Countries";
 
 // import axios from "axios";
 
@@ -23,7 +25,7 @@ const App = () => {
   //   },
   // ];
 
-  return <PhoneBook />;
+  return <Countries />;
 };
 
 export default App;
