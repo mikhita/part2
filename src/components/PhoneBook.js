@@ -9,6 +9,8 @@ const PhoneBook = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchName, setSearchName] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessageRed, setErrorMessageRed] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -73,6 +75,10 @@ const PhoneBook = () => {
         })
         .catch((error) => {
           alert(`the note '${person.name}' was already deleted from server`);
+          setErrorMessageRed(`${person.name} has been removed from server`);
+          setTimeout(() => {
+            setErrorMessageRed(null);
+          }, 5000);
           setPersons(persons.filter((p) => p.id !== id));
         });
     } else if (personObject.name.length < 2 || personObject.number.length < 2) {
@@ -81,6 +87,10 @@ const PhoneBook = () => {
       personsServices.create(personObject).then((response) => {
         if (personObject.name.length > 2) {
           setPersons(persons.concat(personObject));
+          setErrorMessage(`${personObject.name} was added to the phonebook`);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
         }
       });
     }
@@ -115,10 +125,52 @@ const PhoneBook = () => {
       setPersons(persons.filter((n) => n.id !== id));
     }
   };
+  const Notification = ({ message }) => {
+    const errorMessageStyle = {
+      color: "green",
+      fontStyle: "bold",
+      fontSize: 26,
+      padding: 10,
+      backgroundColor: "#D3D3D3",
+      border: "2px solid green",
+      width: "70%",
+    };
+    if (message === null) {
+      return null;
+    }
+
+    return (
+      <div className="error" style={errorMessageStyle}>
+        {message}
+      </div>
+    );
+  };
+  const Notification2 = ({ message }) => {
+    const errorMessageStyle = {
+      color: "red",
+      fontStyle: "bold",
+      fontSize: 26,
+      padding: 10,
+      backgroundColor: "#D3D3D3",
+      border: "2px solid red",
+      width: "70%",
+    };
+    if (message === null) {
+      return null;
+    }
+
+    return (
+      <div className="error" style={errorMessageStyle}>
+        {message}
+      </div>
+    );
+  };
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
+      <Notification2 message={errorMessageRed} />
       <FilteredName
         value={searchName}
         handleSearchNameChange={handleSearchNameChange}

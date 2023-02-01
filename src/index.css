@@ -15,3 +15,11 @@ code {
   background-color: blue;
   cursor: pointer;
 }
+h2 {
+  color: green;
+}
+li {
+  color: grey;
+  padding-top: 3px;
+  font-size: 15px;
+}
