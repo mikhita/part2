@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import countriesServices from "../services/countries";
 import Countrie from "./Countrie";
+import CountryWeather from "./CountryWeather";
 
 const Countries = () => {
   const [countries, setCountries] = useState([]);
@@ -20,12 +21,23 @@ const Countries = () => {
 
   useEffect(() => {
     console.log("effect");
-    if (searchName) {
-      countriesServices.getAll().then((response) => {
+    const fetchData = async () => {
+      if (searchName) {
+        const response = await countriesServices.getAll();
         setCountries(response.data);
-      });
-    }
+      }
+    };
+    fetchData();
   }, [searchName]);
+  // useEffect(() => {
+  //   console.log("effect");
+
+  //   wheatherServices.getAll(searchName).then((response) => {
+  //     setWeather(response.data);
+  //   });
+  // }, [searchName]);
+  // console.log({ weather });
+  console.log("country lengt is:", countries.length);
 
   console.log("render", countries.length, "notes");
   let displayText = false;
@@ -111,6 +123,7 @@ const Countries = () => {
                   alt="flag"
                   style={{ marginTop: "30px" }}
                 />
+                <CountryWeather name={countrie.name.common} />
               </div>
             );
           }
