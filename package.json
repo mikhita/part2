@@ -52,6 +52,7 @@
     "json-server": "^0.17.1",
     "react-app-rewired": "^2.2.1"
   },
+  "proxy": "http://localhost:3001",
   "browser": {
     "zlib": false,
     "stream": false

@@ -52,8 +52,8 @@ const Notes = () => {
 
     noteServises
       .update(id, changeNote)
-      .then((response) => {
-        setNotes(notes.map((n) => (n.id !== id ? n : response.data)));
+      .then((returnedNote) => {
+        setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
       })
       .catch((error) => {
         setErrorMessage(
