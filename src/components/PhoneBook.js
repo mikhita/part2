@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import personsServices from "../services/persons";
 import AddContact from "./AddContact";
 import FilteredName from "./FilteredName";
+import Notification from "./Notification";
+import Notification2 from "./Notification2";
 import NumbersList from "./NumbersList";
 
 const PhoneBook = () => {
@@ -160,78 +162,43 @@ const PhoneBook = () => {
     }
   };
 
-  const Notification = ({ message }) => {
-    const errorMessageStyle = {
-      color: "green",
-      fontStyle: "bold",
-      fontSize: 26,
-      padding: 10,
-      backgroundColor: "#D3D3D3",
-      border: "2px solid green",
-      width: "70%",
-    };
-    if (message === null) {
-      return null;
-    }
-
-    return (
-      <div className="error" style={errorMessageStyle}>
-        {message}
-      </div>
-    );
-  };
-  const Notification2 = ({ message }) => {
-    const errorMessageStyle = {
-      color: "red",
-      fontStyle: "bold",
-      fontSize: 26,
-      padding: 10,
-      backgroundColor: "#D3D3D3",
-      border: "2px solid red",
-      width: "70%",
-    };
-    if (message === null) {
-      return null;
-    }
-
-    return (
-      <div className="error" style={errorMessageStyle}>
-        {message}
-      </div>
-    );
-  };
+  
+  
 
   return (
-    <div>
-      <h2>Phonebook</h2>
-      <Notification message={errorMessage} />
-      <Notification2 message={errorMessageRed} />
-      <FilteredName
-        value={searchName}
-        handleSearchNameChange={handleSearchNameChange}
-        filteredArray={filteredArray}
-      />
-      <h2>add a new</h2>
-      <AddContact
-        addName={addName}
-        handleNameChange={handleNameChange}
-        newName={newName}
-        newNumber={newNumber}
-        handleNumberChange={handleNumberChange}
-      />
-      <h2>Numbers</h2>
-      <div>
-        <ul>
-          {persons.map((person) => (
-            <NumbersList
-              key={person.id}
-              person={person}
-              handleDelete={() => handleDeleteOf(person.id)}
-            />
-          ))}
-        </ul>
-      </div>
-    </div>
+    <div className="flex flex-col items-center justify-center p-8">
+  <h2 className="text-2xl font-bold text-indigo-500">Phonebook</h2>
+  <Notification className="m-2" message={errorMessage} />
+  <Notification2 className="m-2" message={errorMessageRed} />
+  <FilteredName
+    className="m-2"
+    value={searchName}
+    handleSearchNameChange={handleSearchNameChange}
+    filteredArray={filteredArray}
+  />
+  <h2 className="text-2xl font-bold text-indigo-500">Add a new contact</h2>
+  <AddContact
+    className="m-2"
+    addName={addName}
+    handleNameChange={handleNameChange}
+    newName={newName}
+    newNumber={newNumber}
+    handleNumberChange={handleNumberChange}
+  />
+  <h2 className="text-2xl font-bold text-indigo-500">Numbers</h2>
+  <div className="flex flex-col items-center">
+    <ul className="list-reset">
+      {persons.map((person) => (
+        <NumbersList
+          key={person.id}
+          person={person}
+          handleDelete={() => handleDeleteOf(person.id)}
+        />
+      ))}
+    </ul>
+  </div>
+</div>
+
   );
 };
 
