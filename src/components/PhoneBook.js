@@ -38,9 +38,15 @@ const PhoneBook = () => {
   };
   console.log("persons are", persons);
 
-  const filteredArray = persons.filter((person) =>
-    person.name.includes(searchName)
-  );
+  let filteredArray = [];
+
+  if (Array.isArray(persons) && persons.length) {
+    filteredArray = persons.filter((person) =>
+      person.name.includes(searchName)
+    );
+  } else {
+    console.log('persons is not an array or does not have values');
+  }
   console.log("filteredaRRAY:", filteredArray);
   function canAddObject(array, newObject) {
     for (let i = 0; i < array.length; i++) {
