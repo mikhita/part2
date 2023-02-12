@@ -4,7 +4,7 @@ const baseUrl = "/api/persons";
 const getAll = async () => {
   try {
     const response = await axios.get(baseUrl);
-    return response.data;
+    return response;
   } catch (error) {
     console.error(error);
     return error;
