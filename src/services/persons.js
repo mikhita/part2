@@ -1,8 +1,14 @@
 import axios from "axios";
 const baseUrl = "/api/persons";
 
-const getAll = () => {
-  return axios.get(baseUrl);
+const getAll = async () => {
+  try {
+    const response = await axios.get(baseUrl);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
 };
 
 const create = (newObject) => {
