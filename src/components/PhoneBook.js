@@ -193,15 +193,19 @@ const PhoneBook = () => {
   />
   <h2 className="text-2xl font-bold text-indigo-500">Numbers</h2>
   <div className="flex flex-col items-center">
-    <ul className="list-reset">
-      {persons.map((person) => (
-        <NumbersList
-          key={person.id}
-          person={person}
-          handleDelete={() => handleDeleteOf(person.id)}
-        />
-      ))}
-    </ul>
+  {Array.isArray(persons) && persons.length ? (
+  <ul className="list-reset">
+    {persons.map((person) => (
+      <NumbersList
+        key={person.id}
+        person={person}
+        handleDelete={() => handleDeleteOf(person.id)}
+      />
+    ))}
+  </ul>
+) : (
+  <p>No persons found</p>
+)}
   </div>
 </div>
 
